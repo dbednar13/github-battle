@@ -33,6 +33,8 @@ module.exports = {
             "error",
             "always"
         ],
-		no-unused-vars: ["error", { "ignoreRestSiblings": true }]
+		"react/jsx-uses-vars": [2],
+		"no-console": "off",
+		"no-unused-vars": ["error", { "ignoreRestSiblings": true }]
     }
 };

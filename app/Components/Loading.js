@@ -1,51 +1,50 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const styles = {
-  content: {
-    textAlign: 'center',
-    fontSize: '35px'
-  }
+    content: {
+        textAlign: 'center',
+        fontSize: '35px'
+    }
 };
 
 class Loading extends React.Component {
-  constructor(props) {
-    super(props);
+    state = {
+        text: this.props.text
+    }
 
-    this.state = {
-      text: props.text
+    static propTypes = {
+        text: PropTypes.string.isRequired,
+        speed: PropTypes.number.isRequired,
     };
-  }
-  componentDidMount() {
-    const { text, speed } = this.props
-    const stopper = text + '...';
+    
+    static defaultProps = {
+        text: 'Loading',
+        speed: 300
+    };
 
-    this.interval = window.setInterval(() => {
-      this.state.text === stopper
-        ? this.setState(() => ({ text: this.props.text }))
-        : this.setState((prevState) => ({ text: prevState.text + '.' }))
-    }, speed)
-  }
-  componentWillUnmount() {
-    window.clearInterval(this.interval);
-  }
-  render() {
-    return (
-      <p style={styles.content}>
-        {this.state.text}
-      </p>
-    )
-  }
+    componentDidMount() {
+        const { text, speed } = this.props;
+        const stopper = text + '...';
+
+        this.interval = window.setInterval(() => {
+            this.state.text === stopper
+                ? this.setState(() => ({ text: this.props.text }))
+                : this.setState((prevState) => ({ text: prevState.text + '.' }));
+        }, speed);
+    }
+    componentWillUnmount() {
+        window.clearInterval(this.interval);
+    }
+    render() {
+        return (
+            <p style={styles.content}>
+                {this.state.text}
+            </p>
+        );
+    }
 }
 
-Loading.propTypes = {
-  text: PropTypes.string.isRequired,
-  speed: PropTypes.number.isRequired,
-};
 
-Loading.defaultProps = {
-  text: 'Loading',
-  speed: 300
-};
 
 export default Loading;
